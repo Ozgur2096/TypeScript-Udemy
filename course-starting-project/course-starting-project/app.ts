@@ -1,9 +1,11 @@
 // Union Type ---------> number | string
 // Literal Types ---------> 'as-number' | 'as-string'
+// Type Aliases / Custom Types
+type Combinable = number | string;
 
 function combine(
   input1: number | string,
-  input2: number | string,
+  input2: Combinable,
   resultConversion: 'as-number' | 'as-string'
 ) {
   let result;

@@ -13,6 +13,7 @@
 
 interface Named {
   readonly name: string; // "readonly" is possible here
+  output?: string; // optional property
 }
 interface Greetable extends Named {
   greet(phrase: string): void;
@@ -23,6 +24,7 @@ class Person implements Greetable {
   age = 30;
 
   constructor(name: string) {
+    // name?: string ---> ? means 'optional'
     this.name = name;
   }
 
@@ -38,3 +40,17 @@ userOne = new Person('John');
 
 userOne.greet('Hi there, I am');
 console.log(userOne);
+
+// Interfaces as Function Types
+// type
+type AddFn = (a: number, b: number) => number;
+
+let add: AddFn;
+add = (a: number, b: number) => a + b;
+
+// Interface
+interface AddFunction {
+  (a: number, b: number): number;
+}
+
+let add2: AddFunction = (a: number, b: number) => a + b;

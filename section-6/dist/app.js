@@ -58,3 +58,34 @@ const v1 = new Car();
 const v2 = new Truck();
 useVehicle(v1);
 useVehicle(v2, 100);
+function moveAnimal(animal) {
+    let speed;
+    switch (animal.animalType) {
+        case 'bird':
+            {
+                speed = animal.flyingSpeed;
+            }
+            break;
+        case 'horse': {
+            speed = animal.runningSpeed;
+        }
+    }
+    console.log('Moving with speed: ' + speed);
+}
+const sparrow = {
+    animalType: 'bird',
+    flyingSpeed: 100,
+};
+const myHorse = {
+    animalType: 'horse',
+    runningSpeed: 80,
+};
+moveAnimal(sparrow);
+moveAnimal(myHorse);
+const paragraph = document.querySelector('p');
+const userInputElement = document.getElementById('user-input');
+userInputElement.value = 'Hi there';
+const errorBag = {
+    email: 'Not a valid email address!',
+    username: 'Must start with a letter',
+};

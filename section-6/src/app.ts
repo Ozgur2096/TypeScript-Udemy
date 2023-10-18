@@ -93,3 +93,71 @@ const v2 = new Truck();
 
 useVehicle(v1);
 useVehicle(v2, 100);
+
+// DISCRIMINATED UNIONS
+
+interface Bird {
+  animalType: 'bird';
+  flyingSpeed: number;
+}
+
+interface Horse {
+  animalType: 'horse';
+  runningSpeed: number;
+}
+
+type Animal = Bird | Horse;
+
+function moveAnimal(animal: Animal) {
+  let speed;
+  switch (animal.animalType) {
+    case 'bird':
+      {
+        speed = animal.flyingSpeed;
+      }
+      break;
+    case 'horse': {
+      speed = animal.runningSpeed;
+    }
+  }
+
+  console.log('Moving with speed: ' + speed);
+}
+
+const sparrow: Animal = {
+  animalType: 'bird',
+  flyingSpeed: 100,
+};
+const myHorse: Animal = {
+  animalType: 'horse',
+  runningSpeed: 80,
+};
+
+moveAnimal(sparrow);
+moveAnimal(myHorse);
+
+// TYPE CASTING
+
+const paragraph = document.querySelector('p'); // const paragraph: HTMLParagraphElement | null
+
+// Version 1
+// const userInputElement = <HTMLInputElement>(
+//   document.getElementById('user-input')!
+// );
+
+// Version 2
+const userInputElement = document.getElementById(
+  'user-input'
+) as HTMLInputElement;
+userInputElement.value = 'Hi there';
+
+// INDEX PROPERTIES
+
+interface ErrorContainer {
+  [key: string]: string;
+}
+
+const errorBag: ErrorContainer = {
+  email: 'Not a valid email address!',
+  username: 'Must start with a letter',
+};

@@ -1,4 +1,5 @@
 "use strict";
+var _a;
 const e1 = {
     name: 'Joe',
     privileges: ['priv1'],
@@ -89,3 +90,25 @@ const errorBag = {
     email: 'Not a valid email address!',
     username: 'Must start with a letter',
 };
+function add2(n1, n2) {
+    if (typeof n1 === 'string' || typeof n2 === 'string') {
+        return n1.toString() + n2.toString();
+    }
+    return n1 + n2;
+}
+const result = add2('John', 'Doe');
+result.split(' ');
+const fetchedData = {
+    userId: 'u1',
+    name: 'Max',
+};
+const fetchUserData = {
+    id: 'ul',
+    name: 'Max',
+};
+console.log((_a = fetchUserData === null || fetchUserData === void 0 ? void 0 : fetchUserData.job) === null || _a === void 0 ? void 0 : _a.title);
+const someInput = '';
+const storeData = someInput || 'DEFAULT';
+const storeData2 = someInput !== null && someInput !== void 0 ? someInput : 'DEFAULT';
+console.log(storeData);
+console.log(storeData2);

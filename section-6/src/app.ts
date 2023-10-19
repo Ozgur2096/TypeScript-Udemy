@@ -161,3 +161,63 @@ const errorBag: ErrorContainer = {
   email: 'Not a valid email address!',
   username: 'Must start with a letter',
 };
+
+// FUNCTION OVERLOADS
+
+type Combinable2 = number | string;
+
+function add2(n1: number, n2: number): number;
+function add2(n1: number, n2: string): string;
+function add2(n1: string, n2: string): string;
+function add2(n1: string, n2: string): string;
+
+function add2(n1: Combinable2, n2: Combinable2) {
+  if (typeof n1 === 'string' || typeof n2 === 'string') {
+    return n1.toString() + n2.toString();
+  }
+  return n1 + n2;
+}
+
+const result = add2('John', 'Doe');
+result.split(' '); // I can use split method here because I defined all possibilities
+// If I wouldn't define as 'function add2(n1: string, n2: string): string;'
+// I could not use 'split' here because Combinable2 type has no 'split' method
+
+// OPTIONAL CHAINING  ----> '?'
+
+const fetchedData = {
+  userId: 'u1',
+  name: 'Max',
+  // job: {title: 'CEO', description: 'My own company'}
+};
+
+// console.log(fetchedData?.job?.title);   // ERROR ---> it didn't work, I don't know why...
+// There are another solutions as:
+interface JobData {
+  title: string;
+  description: string;
+}
+interface FetchUserData {
+  id: string;
+  name: string;
+  job?: JobData;
+}
+
+const fetchUserData: FetchUserData = {
+  id: 'ul',
+  name: 'Max',
+  // job: { title: 'CEO', description: 'My own company' }
+};
+console.log(fetchUserData?.job?.title); // undefined
+
+// NULLISH COALESCING
+
+// Traditional approach --> it doesn't matter if the input are null, undefined, '' or 0, storeData will be 'DEFAULT'
+const someInput = '';
+const storeData = someInput || 'DEFAULT';
+
+// TypeScript approach --> storeData will be 'DEFAULT', if the input is only null or undefined.
+const storeData2 = someInput ?? 'DEFAULT';
+
+console.log(storeData);
+console.log(storeData2);

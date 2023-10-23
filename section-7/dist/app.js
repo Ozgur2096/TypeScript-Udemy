@@ -21,3 +21,8 @@ function countAndDescribe(element) {
 }
 console.log(countAndDescribe('Joe is going to the cinema'));
 console.log(countAndDescribe([1, 2, 3, 4, 'af', 'op']));
+function extractAndConvert(obj, key) {
+    return obj[key];
+}
+const extractedObject = extractAndConvert({ name: 'Jane' }, 'name');
+console.log(extractedObject);

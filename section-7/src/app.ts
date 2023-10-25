@@ -95,4 +95,5 @@ function createCourseGoal(
 }
 
 // Readonly
-const someNames = ['Max', 'Mathilda'];
+const someNames: Readonly<string[]> = ['Max', 'Mathilda'];
+// someNames.pop(); // ERROR because 'someNames' is readonly

@@ -26,3 +26,32 @@ function extractAndConvert(obj, key) {
 }
 const extractedObject = extractAndConvert({ name: 'Jane' }, 'name');
 console.log(extractedObject);
+class DataStorage {
+    constructor() {
+        this.data = [];
+    }
+    addItem(item) {
+        this.data.push(item);
+    }
+    removeItem(item) {
+        if (this.data.indexOf(item) === -1) {
+            return;
+        }
+        this.data.splice(this.data.indexOf(item), 1);
+    }
+    getItems() {
+        return [...this.data];
+    }
+}
+const textStorage = new DataStorage();
+textStorage.addItem('abc');
+const textStorageResult = textStorage.getItems();
+console.log(textStorageResult);
+function createCourseGoal(title, description, completeUntil) {
+    let courseGoal = {};
+    courseGoal.title = title;
+    courseGoal.description = description;
+    courseGoal.completeUntil = completeUntil;
+    return courseGoal;
+}
+const someNames = ['Max', 'Mathilda'];

@@ -5,15 +5,33 @@ function Logger(logString: string) {
   };
 }
 
+// function WithTemplate(template: string, hookId: string) {
+//   // return function (_: Function) {
+//   return function (originalConstructor: any) {
+//     const hookEl = document.getElementById(hookId);
+//     const person = new originalConstructor();
+//     if (hookEl) {
+//       hookEl.innerHTML = template;
+//       hookEl.innerHTML += `<h2>${person.name}</h2>`;
+//     }
+//   };
+// }
+
 function WithTemplate(template: string, hookId: string) {
   // return function (_: Function) {
-  return function (constructor: any) {
-    const hookEl = document.getElementById(hookId);
-    const person = new constructor();
-    if (hookEl) {
-      hookEl.innerHTML = template;
-      hookEl.innerHTML += `<h2>${person.name}</h2>`;
-    }
+  return function <T extends { new (...args: any[]): { name: string } }>(
+    originalConstructor: T
+  ) {
+    return class extends originalConstructor {
+      constructor(..._: any[]) {
+        super();
+        const hookEl = document.getElementById(hookId);
+        if (hookEl) {
+          hookEl.innerHTML = template;
+          hookEl.innerHTML += `<h2>${this.name}</h2>`;
+        }
+      }
+    };
   };
 }
 
@@ -84,3 +102,37 @@ class Product {
     return this._price * (1 + tax);
   }
 }
+
+// Creating an 'AutoBind' decorator
+
+function AutoBind(
+  _: any, // target
+  _2: string, // methodName
+  descriptor: PropertyDescriptor
+) {
+  const originalMethod = descriptor.value;
+  const adjustedDescriptor: PropertyDescriptor = {
+    configurable: true,
+    enumerable: false,
+    get() {
+      const boundFn = originalMethod.bind(this);
+      return boundFn;
+    },
+  };
+  return adjustedDescriptor;
+}
+
+class Printer {
+  message = 'This works';
+
+  @AutoBind
+  showMessage() {
+    console.log(this.message);
+  }
+}
+
+const p = new Printer();
+console.log(p);
+
+const button = document.querySelector('button')!;
+button.addEventListener('click', p.showMessage);

@@ -15,13 +15,17 @@ function Logger(logString) {
     };
 }
 function WithTemplate(template, hookId) {
-    return function (constructor) {
-        const hookEl = document.getElementById(hookId);
-        const person = new constructor();
-        if (hookEl) {
-            hookEl.innerHTML = template;
-            hookEl.innerHTML += `<h2>${person.name}</h2>`;
-        }
+    return function (originalConstructor) {
+        return class extends originalConstructor {
+            constructor(..._) {
+                super();
+                const hookEl = document.getElementById(hookId);
+                if (hookEl) {
+                    hookEl.innerHTML = template;
+                    hookEl.innerHTML += `<h2>${this.name}</h2>`;
+                }
+            }
+        };
     };
 }
 let Person = class Person {
@@ -88,4 +92,31 @@ __decorate([
     Log3,
     __param(0, Log4)
 ], Product.prototype, "getPriceWithTax", null);
+function AutoBind(_, _2, descriptor) {
+    const originalMethod = descriptor.value;
+    const adjustedDescriptor = {
+        configurable: true,
+        enumerable: false,
+        get() {
+            const boundFn = originalMethod.bind(this);
+            return boundFn;
+        },
+    };
+    return adjustedDescriptor;
+}
+class Printer {
+    constructor() {
+        this.message = 'This works';
+    }
+    showMessage() {
+        console.log(this.message);
+    }
+}
+__decorate([
+    AutoBind
+], Printer.prototype, "showMessage", null);
+const p = new Printer();
+console.log(p);
+const button = document.querySelector('button');
+button.addEventListener('click', p.showMessage);
 //# sourceMappingURL=app.js.map
